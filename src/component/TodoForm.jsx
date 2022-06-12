@@ -19,7 +19,6 @@ export const TodoForm = ({
 
     return (
         <>
-        
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <form onSubmit={handleSubmit} className="pd-todo-form">
 
@@ -75,16 +74,16 @@ export const TodoForm = ({
                         <div className='projects'>
                             {
                                 projects.length > 0 ?
-                                projects.map(project =>
-                                    <div 
-                                    className={`project ${ todoProject === project.name ? 'active' : '' }`}
-                                     key={project.id}
-                                     onClick={()=>setTodoProject(project.name)}
-                                     >
-                                        {project.name}
-                                    </div>
-                                ) :
-                                 <div style={{color: '#ff0000'}}> Please add a project </div>
+                                    projects.map(project =>
+                                        <div
+                                            className={`project ${todoProject === project.name ? 'active' : ''}`}
+                                            key={project.id}
+                                            onClick={() => setTodoProject(project.name)}
+                                        >
+                                            {project.name}
+                                        </div>
+                                    ) :
+                                    <div style={{ color: '#ff0000' }}> Please add a project </div>
                             }
                         </div>
                     </div>

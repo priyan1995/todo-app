@@ -7,6 +7,7 @@ import { Sidebar } from "./component/Sidebar"
 import { TodoList } from "./component/TodoList"
 import { User } from "./component/User"
 import { TodoContextProvider } from "./context/TodoContext"
+import './styles/todo.css'
 
 
 export const Home = () => {

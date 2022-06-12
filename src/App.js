@@ -9,7 +9,8 @@ import { Home } from "./home";
 
 function App() {
   return (
-    <>
+
+    <div className="App">
       <Router>
         <Switch>
           <Route exact path="/">
@@ -17,10 +18,9 @@ function App() {
           </Route>
         </Switch>
       </Router>
+    </div>
 
 
-
-    </>
   );
 }
 
