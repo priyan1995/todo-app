@@ -1,37 +1,40 @@
-// import { useEffect, useState } from "react";
-// import firebase from "../services/todoFirebaseService";
+import { useEffect, useState } from "react";
+import 'firebase/firestore';
+import db from "../services/todoFirebaseService";
 
 
-// export function useProjects(todos){
+export function useProjects(todos){
 
-//     const [projects, setProjects] = useState([]);
+    const [projects, setProjects] = useState([]);
 
-//     // function calculateNumOfTodos(projectName,todos){
-//     //     return todos.filter( todo => todo.projectName === projectName).length;
-//     // }
+    function calculateNumOfTodos(projectName,todos){        
+        return todos.filter( todo => todo.projectName === projectName).length;
+    }
 
-//     useEffect(()=>{
+    const database = db;
 
-//         let unsubscribe = firebase
-//         .firestore()
-//         .collection('projects')
-//         .onSnapshot( snapshot => {
-//             const data = snapshot.docs.map(doc=>{
+    useEffect(()=>{
 
-//                 const projectName = doc.data().name;
-//                 return{
-//                     id: doc.id,
-//                     name: projectName,
-//                     // numOfTodos: calculateNumOfTodos(projectName, todos)
-//                 }
-//                 setProjects(data);
-//             })
-//         })
+        let unsubscribe = database
+        .collection('projects')
+        .onSnapshot( snapshot => {
+            const data = snapshot.docs.map(doc=>{
 
-//         return () => unsubscribe();
+                const projectName = doc.data().name;
+                return{
+                    id: doc.id,
+                    name: projectName,
+                    numOfTodos: calculateNumOfTodos(projectName, todos)
+                }
+               
+            })
+            setProjects(data);
+        })
 
-//     },[])
+        return () => unsubscribe();
 
-//     return projects;
+    },[todos])
 
-// }
+    return projects;
+
+}

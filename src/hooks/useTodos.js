@@ -9,6 +9,8 @@ export function useTodos() {
 
     const [todos, setTodos] = useState([]);
 
+    console.log(todos)
+
     useEffect(() => {
 
         let unsubscribe = database
@@ -26,7 +28,7 @@ export function useTodos() {
 
         return () => unsubscribe();
 
-    }, [])
+    },[db])
 
    
     return todos;

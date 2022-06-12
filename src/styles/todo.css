@@ -126,6 +126,7 @@
   width: 100%;
   background: white;
   border-radius: 4px;
+  padding-left: 32px;
 }
 .pd-todo-form .text input {
   padding: 1rem;
