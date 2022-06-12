@@ -8,7 +8,7 @@ const TodoContextProvider = ({ children }) => {
 
     const defaultProject = 'today';
     const [selectedProject, setSelectedProject] = useState(defaultProject);
-    // const todos = useTodos();
+    const todos = useTodos();
     // const projects = useProjects(todos);
 
   
@@ -20,7 +20,7 @@ const TodoContextProvider = ({ children }) => {
                 {
                     selectedProject,
                     setSelectedProject,
-                    // todos,
+                    todos,
                     // projects
                 }
             }>
