@@ -1,38 +1,479 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
+
+.pd-todo-wrapper {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Ubuntu", sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* App */
+.pd-todo-wrapper {
   display: flex;
-  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* pd-sidebar */
+.pd-todo-wrapper .pd-sidebar {
+  width: 300px;
+  min-width: 210px;
+  height: 100%;
+}
+
+/* pd-main */
+.pd-todo-wrapper .pd-main {
+  width: 100%;
+  height: 100%;
+  background-image: url("./images/todo_background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+/* pd-user */
+.pd-todo-wrapper .pd-user {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-around;
+  padding: 1rem;
+  border: 1px solid #ebebeb;
+}
+
+.pd-todo-wrapper .pd-user .logo img {
+  width: 50px;
+  border-radius: 50%;
+  border: 1px solid #000;
+}
+
+.pd-todo-wrapper .pd-user .info p {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.pd-todo-wrapper .pd-user .info a {
+  text-decoration: none;
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+/* pd-modal */
+.pd-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 99999;
+}
+.pd-modal .container {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -25%);
+  background: white;
+}
+
+
+/* pd-add-new-todo */
+.pd-add-new-todo {
+  border-bottom: 1px solid #ebebeb;
+}
+.pd-add-new-todo .btn {
+  padding: 1rem;
+  width: 100%;
+  height: 70px;
+}
+.pd-add-new-todo .btn button {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 3px;
+  font-size: 1rem;
+  background-color: #0080ff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.pd-add-new-todo .btn button:hover {
+  filter: brightness(1.1);
+  transition: all 300ms ease;
+}
+
+.pd-modal .pd-modal-closebtn{
+  position: absolute;
+    right: 0;
+    top: 0;
+    background: #ff4a4a;
+    color: white;
+    font-size: 10px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* pd-add-new-todo form */
+.pd-todo-form {
+  padding: 1rem 1rem calc(1rem + 40px) 1rem;
+  width: 100%;
+  background: white;
+  border-radius: 4px;
+}
+.pd-todo-form .text input {
+  padding: 1rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  border: none;
+  font-size: 1.2rem;
+}
+.pd-todo-form .text input:focus {
+  outline: none;
+  border-bottom: 1px solid #0080ff;
+}
+.pd-todo-form .remind {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+.pd-todo-form p {
+  margin-left: 10px;
+  margin-bottom: 0;
+}
+.pd-todo-form .title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.pd-todo-form .pick-day {
+  padding: 1.5rem 1.5rem 0 1.5rem;
+}
+.pd-todo-form .pick-time {
+  padding: 1.5rem;
+}
+.pd-todo-form .pick-project {
+  padding: 0.5rem;
+}
+.pd-todo-form .pick-project .projects {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem 1rem 0 1rem;
+}
+.pd-todo-form .pick-project .projects .project {
+  border: 1px solid #0080ff;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  cursor: pointer;
+}
+.pd-todo-form .pick-project .projects .active {
+  background: #0080ff;
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.pd-todo-form .cancel {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  cursor: pointer;
+}
+.pd-todo-form .confirm {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.pd-todo-form .confirm button {
+  width: 100%;
+  height: 40px;
+  background: #0080ff;
+  color: white;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 0 0 4px 4px;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* calendar */
+.calendar {
+  padding: 1rem;
+  border-bottom: 1px solid #ebebeb;
+}
+.calendar .header {
+  display: flex;
+  align-items: center;
+}
+.calendar .header .title {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.calendar .header .title p {
+  margin-left: 5px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0;
+  margin-right: 5px;
+}
+.calendar .header .btns span {
+  border-radius: 50%;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.calendar .header .btns span:hover {
+  background-color: #ebebeb;
+  transition: all 300ms ease-in-out;
+}
+.calendar .items {
+  padding: 0.5rem;
+}
+.calendar .items .item {
+  padding: 0.25rem;
+  margin: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+
+/* Projects */
+.pd-projects {
+  padding: 1rem;
+  border-bottom: 1px solid #ebebeb;
+}
+.pd-projects .header {
+  display: flex;
+  align-items: center;
+}
+.pd-projects .header .title {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.pd-projects .header .title p {
+  margin-left: 5px;
+  font-size: 1.1rem;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+.pd-projects .header .btns {
+  display: flex;
+  align-items: center;
+}
+.pd-projects .header .btns span.edit {
+  margin-right: 5px;
+}
+.pd-projects .header .btns span {
+  border-radius: 50%;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pd-projects .header .btns span:hover {
+  background-color: #ebebeb;
+  transition: all 300ms ease-in-out;
+}
+.pd-projects .items {
+  padding: 0.5rem;
+}
+/* Project */
+.pd-project {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  margin: 5px;
+  font-size: 1rem;
+}
+.pd-project .name {
+  cursor: pointer;
+  word-break: break-all;
+}
+.pd-project .btns {
+  display: flex;
+  align-items: center;
+}
+.pd-project .btns .total-todos {
+  position: absolute;
+  right: 0;
+  background: #ebebeb;
+  width: 25px;
+  height: 25px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.pd-project .btns .edit-delete {
+  position: absolute;
+  right: 0;
+  display: flex;
+}
+.pd-project .btns .edit-delete span {
+  border-radius: 50%;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 300ms ease-in-out;
+}
+.pd-project .btns .edit-delete span.edit:hover {
+  background: #acffac;
+}
+.pd-project .btns .edit-delete span.delete:hover {
+  background: #ffacac;
+}
+
+
+
+/* AddNewProject */
+.pd-add-new-project .add-button span {
+  margin-right: 5px;
+}
+/* ProjectForm */
+.pd-project-form {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  position: relative;
+  padding-bottom: 40px;
+}
+.pd-project-form input {
+  width: 100%;
+  height: 40px;
+  margin: 15px 0;
+  border: none;
+  font-size: 1.2rem;
+}
+.pd-project-form input:focus {
+  outline: none;
+  border-bottom: 1px solid #0080ff;
+}
+.pd-project-form button {
+  position: absolute;
+  bottom: 0;
+  height: 40px;
+  width: 50%;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: filter 300ms ease-in-out;
+}
+.pd-project-form button.cancel {
+  left: 0;
+  background-color: #bebebe;
+}
+.pd-project-form button.confirm {
+  right: 0;
+  background-color: #0080ff;
+}
+.pd-project-form button:hover {
+  filter: brightness(1.1);
+}
+
+
+/* Todos */
+.pd-todo-list {
+  width: 450px;
+  height: 85%;
+  background-color: white;
+  overflow: auto;
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+
+  border-radius: 4px;
+  opacity: 0.9;
+
+  padding: 0 0.5rem 0.5rem 0.5rem;
+}
+.pd-todo-list .selected-project {
+  margin: 1rem 0;
+  text-transform: capitalize;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #eeeeee;
+}
+.pd-todo-list .todos {
+  overflow-y: auto;
+}
+
+
+/* Todo */
+.todo {
+  padding: 0.5rem 1rem;
+}
+.todo .todo-container {
+  display: flex;
+  align-items: center;
+}
+.todo .todo-container span {
+  cursor: pointer;
+}
+.todo .todo-container .text {
+  position: relative;
+  flex: 1;
+  margin: 0 10px;
+  cursor: pointer;
+}
+.todo .todo-container .text span {
+  font-size: 0.8rem;
+  color: #bebebe;
+}
+.todo .todo-container .text .line {
+  height: 1px;
+  background: #bebebe;
+  position: absolute;
+  top: 25%;
+  width: 0;
+  transition: width 250ms ease-in-out;
+}
+.todo .todo-container .text .line-through {
+  width: 100%;
+}
+.todo .todo-container .add-to-next-day {
+  margin-right: 10px;
+}
+
+.todo .todo-container p{
+  margin-bottom: 0;
+}
+
+/* EditTodo */
+.pd-edit-todo {
+  position: absolute;
+  bottom: 40px;
+  left: calc(40px + 450px + 40px);
+
+  background-color: white;
+  overflow: auto;
+  height: 85%;
+  width: 450px;
+
+  border-radius: 4px;
+  opacity: 0.9;
+}
+.pd-edit-todo .header {
+  margin: 1rem 0.5rem;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+
+  padding-bottom: 2px;
+  border-bottom: 1px solid #eeeeee;
 }
