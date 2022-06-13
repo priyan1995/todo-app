@@ -2,27 +2,48 @@ import React, { useContext, useEffect, useState } from 'react';
 import { TodoContext } from '../context/TodoContext';
 import { TodoForm } from './TodoForm';
 import { CustomModal } from './UIElements/Modal';
+import db from "../services/todoFirebaseService";
+import moment from 'moment';
+import { format } from 'date-fns';
+import randomColor from 'randomcolor';
 
 export const AddNewTodo = () => {
 
-    const { selectedProject } = useContext(TodoContext);
+    const { projects,selectedProject } = useContext(TodoContext);
 
     const [showModal, setShowModal] = useState(false);
     const [text, setText] = useState();
     const [day, setDay] = useState(new Date());
     const [time, setTime] = useState(new Date());
-    const [todoProject, setTodoProject] = useState();
+    const [todoProject, setTodoProject] = useState(selectedProject);
 
 
-    const projects = [
-        { id: 1, name: "personal", numOfTodos: 0 },
-        { id: 2, name: "work", numOfTodos: 1 },
-        { id: 3, name: "other", numOfTodos: 2 },
-    ]
 
     const handleSubmit = (e) => {
         console.log("submitted");
         e.preventDefault();
+
+        if(text ){
+            db
+            .collection('todos')
+            .add(
+                {
+                    text:text,
+                    date:moment(day).format('MM/DD/YYYY'),
+                    day: moment(day).format('d'),
+                    time:moment(time).format('hh:mm A'),
+                    projectName: todoProject,
+                    checked:false,
+                    color:randomColor()
+
+                }
+            )
+
+            setShowModal(false);
+            setText('');
+            setDay(new Date());
+            setTime(new Date());
+        }
     }
 
     useEffect(() => {
@@ -52,6 +73,7 @@ export const AddNewTodo = () => {
                     showButtons={true}
                     todoProject={todoProject}
                     setTodoProject={setTodoProject}
+                    submitButtonTitle="+ Add Todo"
                 />
 
             </CustomModal>

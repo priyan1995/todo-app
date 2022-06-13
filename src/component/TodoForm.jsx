@@ -14,7 +14,8 @@ export const TodoForm = ({
     time, setTime,
     handleSubmit,
     projects,
-    todoProject, setTodoProject
+    todoProject, setTodoProject,
+    submitButtonTitle=submitButtonTitle
 }) => {
 
     return (
@@ -91,7 +92,7 @@ export const TodoForm = ({
                     {
                         showButtons &&
                         <div className='confirm'>
-                            <button>+ Add to do</button>
+                            <button>{submitButtonTitle}</button>
                         </div>
 
                     }

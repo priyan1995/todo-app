@@ -67,7 +67,7 @@
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 99999;
+  z-index: 99;
 }
 .pd-modal .container {
   position: absolute;

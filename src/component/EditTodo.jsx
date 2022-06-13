@@ -43,6 +43,7 @@ export const EditTodo = () => {
                         showButtons={true}
                         todoProject={todoProject}
                         setTodoProject={setTodoProject}
+                        submitButtonTitle="Save Todo"
                     />
 
                 </div>
