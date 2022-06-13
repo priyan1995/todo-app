@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Plus } from 'react-bootstrap-icons';
+import db from '../services/todoFirebaseService';
 import { ProjectForm } from './ProjectForm';
 import { CustomModal } from './UIElements/Modal';
 
@@ -9,9 +10,34 @@ export const AddNewProjects = () => {
     const [projectName, setProjectName] = useState('');
 
     const handleSubmit = (e) => {
-        console.log('Submitted');
         e.preventDefault();
-        console.log(projectName)
+
+
+        if (projectName) {
+
+            const projectRef = db.collection('projects');
+
+            projectRef
+                .where('name', '==', projectName)
+                .get()
+                .then(querySnapshot => {
+                    if (querySnapshot.empty) {
+                        projectRef
+                            .add(
+                                {
+                                    name: projectName
+                                }
+                            )
+                    } else {
+                        alert('Project Already Exists!')
+                    }
+                })
+
+                setShowModal(false);
+                setProjectName('');
+        }
+
+
     }
 
     return (
