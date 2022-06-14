@@ -27,7 +27,7 @@ export const TodoNext7Days = ({ todos }) => {
 
     }, [todos])
 
-    console.log('week todos',weekTodos)
+    console.log('week todos', weekTodos)
 
     return (
         <>
