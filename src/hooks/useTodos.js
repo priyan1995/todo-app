@@ -9,7 +9,6 @@ export function useTodos() {
 
     const [todos, setTodos] = useState([]);
 
-    console.log(todos)
 
     useEffect(() => {
 

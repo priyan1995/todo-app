@@ -1,9 +1,62 @@
+import moment from 'moment';
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { Todo } from './Todo';
 
-export const TodoNext7Days = () => {
+export const TodoNext7Days = ({ todos }) => {
+    //console.log(todos);
+
+    const [weekTodos, setWeekTodos] = useState([]);
+
+    useEffect(() => {
+        const days = ['0', '1', '2', '3', '4', '5', '6'];
+
+        const sortedTodosByDay = days.map(day => {
+            return {
+                todos: todos.filter(todo => todo.day === day),
+                number: day
+            }
+        })
+
+        const today = parseInt(moment().format('d'));
+
+        const arrangeDays = sortedTodosByDay.slice(today).concat(sortedTodosByDay.slice(0, today));
+
+        setWeekTodos(arrangeDays);
+
+    }, [todos])
+
+    console.log('week todos',weekTodos)
+
     return (
         <>
-            <h2>TodoNext7Days</h2>
+            <div className='pd-next7days'>
+                {
+                    weekTodos.map(day =>
+                        <div key={day.number}>
+                            <div className='day'>
+                                <div className='name'>
+                                    {moment(day.number, 'd').format('dddd')}
+                                    {day.number === moment().format('d') && '(Today)'}
+                                </div>
+                                <div className='total-todos'>
+                                    ({day.todos.length})
+                                </div>
+                            </div>
+
+                            <div className='todos'>
+                                {
+                                    day.todos.map(todo =>
+                                        <Todo key={todo.id} todo={todo} />
+                                    )
+                                }
+                            </div>
+
+                        </div>
+                    )
+                }
+            </div>
         </>
     )
 }

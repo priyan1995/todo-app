@@ -9,7 +9,6 @@ export const ProjectRename = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('edit success');
     }
 
     return (

@@ -11,7 +11,7 @@ export const Project = (props) => {
     const [showModal, setShowModal] = useState(false);
     const project = props.project;
 
-    console.log(project)
+    //console.log(project)
 
     return (
         <>

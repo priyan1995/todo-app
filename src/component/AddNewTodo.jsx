@@ -20,7 +20,7 @@ export const AddNewTodo = () => {
 
 
     const handleSubmit = (e) => {
-        console.log("submitted");
+      
         e.preventDefault();
 
         if(text ){

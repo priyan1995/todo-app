@@ -11,7 +11,6 @@ export const CustomModal = (props) => {
         if (e.target === modalRef.current) {
             setShowModal(false);
         }
-        console.log(modalRef.current);
     }
 
     return (
