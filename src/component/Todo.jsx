@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import { ArrowClockwise, CheckCircleFill, Circle, Trash } from 'react-bootstrap-icons';
+import db from '../services/todoFirebaseService';
 
 export const Todo = (props) => {
 
     const todo = props.todo;
 
     const [hover, setHover] = useState(false);
+
+    const deleteTodo = (todo) =>{
+        db
+        .collection('todos')
+        .doc(todo.id)
+        .delete()
+    }
 
     return (
         <>
@@ -45,7 +53,9 @@ export const Todo = (props) => {
                         }
                     </div>
 
-                    <div className='delete-todo'>
+                    <div className='delete-todo'
+                        onClick={() => deleteTodo(todo)}
+                    >
                         {
                             (hover || todo.checked) &&
                             <span>
