@@ -7,26 +7,42 @@ import { CustomModal } from './UIElements/Modal';
 
 export const Project = (props) => {
 
-    const { setSelectedProject } = useContext(TodoContext);
+    const { defaultProject,selectedProject,setSelectedProject } = useContext(TodoContext);
 
     const [showModal, setShowModal] = useState(false);
     const project = props.project;
 
     const deleteProject = (project) => {
         db
-        .collection('projects')
-        .doc(project.id)
-        .delete()
+            .collection('projects')
+            .doc(project.id)
+            .delete()
+            .then(() => {
+                db
+                    .collection('todos')
+                    .where('projectName', '==', project.name)
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach(doc => {
+                            doc.ref.delete()
+                        })
+                    })
+            })
+            .then(() => {
+                if (selectedProject === project.name) {
+                    setSelectedProject(defaultProject)
+                }
+            })
     }
-    
+
 
     return (
         <>
             <div className='pd-project'>
 
-                <div 
-                className='name'
-                onClick={()=> setSelectedProject(project.name)}
+                <div
+                    className='name'
+                    onClick={() => setSelectedProject(project.name)}
                 >
                     {project.name}
                 </div>
@@ -38,9 +54,9 @@ export const Project = (props) => {
                                 <span className='edit' onClick={() => setShowModal(true)}>
                                     <Pencil size="13" />
                                 </span>
-                                <span 
-                                className='delete'
-                                onClick={()=>deleteProject(project)}
+                                <span
+                                    className='delete'
+                                    onClick={() => deleteProject(project)}
                                 >
                                     <XCircle size="13" />
                                 </span>
