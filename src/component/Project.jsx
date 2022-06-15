@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Pencil, XCircle } from 'react-bootstrap-icons';
 import { TodoContext } from '../context/TodoContext';
+import db from '../services/todoFirebaseService';
 import { ProjectRename } from './ProjectRename';
 import { CustomModal } from './UIElements/Modal';
 
@@ -11,7 +12,13 @@ export const Project = (props) => {
     const [showModal, setShowModal] = useState(false);
     const project = props.project;
 
-    //console.log(project)
+    const deleteProject = (project) => {
+        db
+        .collection('projects')
+        .doc(project.id)
+        .delete()
+    }
+    
 
     return (
         <>
@@ -31,7 +38,10 @@ export const Project = (props) => {
                                 <span className='edit' onClick={() => setShowModal(true)}>
                                     <Pencil size="13" />
                                 </span>
-                                <span className='delete'>
+                                <span 
+                                className='delete'
+                                onClick={()=>deleteProject(project)}
+                                >
                                     <XCircle size="13" />
                                 </span>
                             </div>
