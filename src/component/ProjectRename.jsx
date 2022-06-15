@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
+import { TodoContext } from '../context/TodoContext';
 import db from '../services/todoFirebaseService';
 import { ProjectForm } from './ProjectForm';
 
 export const ProjectRename = ({project,setShowModal }) => {
 
+    const { selectedProject,setSelectedProject } = useContext(TodoContext);
 
     const [newProjectName, setNewProjectName] = useState(project.name);
 
@@ -36,7 +39,12 @@ export const ProjectRename = ({project,setShowModal }) => {
                                 projectName: newProjectName
                             })
                         })
-                    } )
+                    })
+                    .then(()=>{
+                        if( selectedProject === oldProjectName){
+                            setSelectedProject(newProjectName)
+                        }
+                    })
                 } )
             }
         } )
