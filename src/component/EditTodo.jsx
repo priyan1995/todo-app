@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
+import { TodoContext } from '../context/TodoContext';
 import { TodoForm } from './TodoForm';
 
 
@@ -11,11 +13,9 @@ export const EditTodo = () => {
     const [time, setTime] = useState();
     const [todoProject, setTodoProject] = useState();
 
-    const projects = [
-        { id: 1, name: "personal", numOfTodos: 0 },
-        { id: 2, name: "work", numOfTodos: 1 },
-        { id: 3, name: "other", numOfTodos: 2 },
-    ]
+    const { selectedTodo, projects } = useContext(TodoContext);
+
+    console.log(selectedTodo);
 
 
     const handleSubmit = (e) => {
@@ -26,28 +26,33 @@ export const EditTodo = () => {
 
     return (
         <>
-            <div className='pd-edit-todo'>
-                <div className='header'>
-                    Edit Todo
-                </div>
-                <div className='container'>
-                    <TodoForm
-                        handleSubmit={handleSubmit}
-                        text={text}
-                        setText={setText}
-                        day={day}
-                        setDay={setDay}
-                        time={time}
-                        setTime={setTime}
-                        projects={projects}
-                        showButtons={true}
-                        todoProject={todoProject}
-                        setTodoProject={setTodoProject}
-                        submitButtonTitle="Save Todo"
-                    />
 
+            {
+                selectedTodo &&
+                <div className='pd-edit-todo'>
+                    <div className='header'>
+                        Edit Todo
+                    </div>
+                    <div className='container'>
+                        <TodoForm
+                            handleSubmit={handleSubmit}
+                            text={text}
+                            setText={setText}
+                            day={day}
+                            setDay={setDay}
+                            time={time}
+                            setTime={setTime}
+                            projects={projects}
+                            showButtons={true}
+                            todoProject={todoProject}
+                            setTodoProject={setTodoProject}
+                        />
+
+                    </div>
                 </div>
-            </div>
+
+
+            }
         </>
     )
 }

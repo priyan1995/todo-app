@@ -1,9 +1,13 @@
 import moment from 'moment';
 import React, { useState } from 'react';
+import { useContext } from 'react';
 import { ArrowClockwise, CheckCircleFill, Circle, Trash } from 'react-bootstrap-icons';
+import { TodoContext } from '../context/TodoContext';
 import db from '../services/todoFirebaseService';
 
 export const Todo = (props) => {
+
+    const { setSelectedTodo,selectedTodo } = useContext(TodoContext);
 
     const todo = props.todo;
 
@@ -38,13 +42,21 @@ export const Todo = (props) => {
         delete repeatedTodo.id
 
         db
-        .collection('todos')
-        .add(repeatedTodo)
+            .collection('todos')
+            .add(repeatedTodo)
+    }
+
+    const handleSelectedTodo = (todo) => {
+        setSelectedTodo(todo);
+        console.log(selectedTodo)
     }
 
     return (
         <>
-            <div className='todo'>
+            <div
+                className='todo'
+              
+            >
                 <div
                     className='todo-container'
                     onMouseEnter={() => setHover(true)}
@@ -68,7 +80,10 @@ export const Todo = (props) => {
                         }
                     </div>
 
-                    <div className='text'>
+                    <div
+                     className='text'
+                     onClick={() => handleSelectedTodo(todo)}
+                     >
                         <p>{todo.text}</p>
                         <span>{todo.time} - {todo.projectName}</span>
                         <div className={`line ${todo.checked ? 'line-through' : ''}`} />
