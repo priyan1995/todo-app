@@ -20,6 +20,14 @@ export const Todo = (props) => {
             .delete()
     }
 
+    
+    const handleDelete = (todo) => {
+        deleteTodo(todo);
+
+        if(selectedTodo === todo){
+            setSelectedTodo(undefined);
+        }
+    }
     const checkTodo = (todo) => {
         db
             .collection('todos')
@@ -102,7 +110,7 @@ export const Todo = (props) => {
                     </div>
 
                     <div className='delete-todo'
-                        onClick={() => deleteTodo(todo)}
+                        onClick={() => handleDelete(todo)}
                     >
                         {
                             (hover || todo.checked) &&

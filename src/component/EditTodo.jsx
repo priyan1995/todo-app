@@ -15,8 +15,6 @@ export const EditTodo = () => {
 
     const { selectedTodo, projects } = useContext(TodoContext);
 
-    console.log(selectedTodo);
-
 
     const handleSubmit = (e) => {
         console.log("submitted");

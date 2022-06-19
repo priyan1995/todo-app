@@ -17,10 +17,6 @@ const TodoContextProvider = ({ children }) => {
     const filteredTodos = useFilterTodos(todos, selectedProject);
     
 
-
-
-
-
     return (
         <TodoContext.Provider
             value={
