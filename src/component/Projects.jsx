@@ -13,6 +13,7 @@ export const Projects = () => {
 
     const { projects } = useContext(TodoContext);
 
+
     return (
         <>
             <div className='pd-projects'>

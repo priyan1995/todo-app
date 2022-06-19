@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import 'firebase/firestore';
-import db from "../services/todoFirebaseService";
 
 export function useProjectsWithStats(projects, todos) {
 

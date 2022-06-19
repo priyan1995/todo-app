@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useState } from 'react';
 import { ArrowClockwise, CheckCircleFill, Circle, Trash } from 'react-bootstrap-icons';
 import db from '../services/todoFirebaseService';
@@ -8,20 +9,37 @@ export const Todo = (props) => {
 
     const [hover, setHover] = useState(false);
 
-    const deleteTodo = (todo) =>{
+    const deleteTodo = (todo) => {
         db
-        .collection('todos')
-        .doc(todo.id)
-        .delete()
+            .collection('todos')
+            .doc(todo.id)
+            .delete()
     }
 
     const checkTodo = (todo) => {
-      db
-      .collection('todos')
-      .doc(todo.id)
-      .update({
-        checked: !todo.checked
-      })  
+        db
+            .collection('todos')
+            .doc(todo.id)
+            .update({
+                checked: !todo.checked
+            })
+    }
+
+    const addNextDay = (todo) => {
+        const nextDate = moment(todo.date, 'MM/DD/YYYY').add(1, 'days');
+
+        const repeatedTodo = {
+            ...todo,
+            checked: false,
+            date: nextDate.format('MM/DD/YYYY'),
+            day: nextDate.format('d')
+        }
+
+        delete repeatedTodo.id
+
+        db
+        .collection('todos')
+        .add(repeatedTodo)
     }
 
     return (
@@ -32,9 +50,9 @@ export const Todo = (props) => {
                     onMouseEnter={() => setHover(true)}
                     onMouseLeave={() => setHover(false)}
                 >
-                    <div 
-                    className='check-todo'
-                    onClick={()=>checkTodo(todo)}
+                    <div
+                        className='check-todo'
+                        onClick={() => checkTodo(todo)}
                     >
                         {
                             todo.checked ?
@@ -56,7 +74,10 @@ export const Todo = (props) => {
                         <div className={`line ${todo.checked ? 'line-through' : ''}`} />
                     </div>
 
-                    <div className='add-to-next-day'>
+                    <div
+                        className='add-to-next-day'
+                        onClick={() => addNextDay(todo)}
+                    >
                         {
                             todo.checked &&
                             <span>
