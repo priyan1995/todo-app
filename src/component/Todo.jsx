@@ -15,6 +15,15 @@ export const Todo = (props) => {
         .delete()
     }
 
+    const checkTodo = (todo) => {
+      db
+      .collection('todos')
+      .doc(todo.id)
+      .update({
+        checked: !todo.checked
+      })  
+    }
+
     return (
         <>
             <div className='todo'>
@@ -23,7 +32,10 @@ export const Todo = (props) => {
                     onMouseEnter={() => setHover(true)}
                     onMouseLeave={() => setHover(false)}
                 >
-                    <div className='check-todo'>
+                    <div 
+                    className='check-todo'
+                    onClick={()=>checkTodo(todo)}
+                    >
                         {
                             todo.checked ?
                                 <span className='checked'>

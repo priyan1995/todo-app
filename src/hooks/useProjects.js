@@ -7,9 +7,7 @@ export function useProjects(todos){
 
     const [projects, setProjects] = useState([]);
 
-    function calculateNumOfTodos(projectName,todos){        
-        return todos.filter( todo => todo.projectName === projectName).length;
-    }
+ 
 
     const database = db;
 
@@ -18,13 +16,11 @@ export function useProjects(todos){
         let unsubscribe = database
         .collection('projects')
         .onSnapshot( snapshot => {
-            const data = snapshot.docs.map(doc=>{
+            const data = snapshot.docs.map(doc=>{ 
 
-                const projectName = doc.data().name;
                 return{
                     id: doc.id,
-                    name: projectName,
-                    numOfTodos: calculateNumOfTodos(projectName, todos)
+                    name: doc.data().name,                  
                 }
                
             })
@@ -33,7 +29,7 @@ export function useProjects(todos){
 
         return () => unsubscribe();
 
-    },[todos])
+    },[])
 
     return projects;
 
