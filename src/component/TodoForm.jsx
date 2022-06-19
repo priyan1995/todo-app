@@ -15,8 +15,11 @@ export const TodoForm = ({
     handleSubmit,
     projects,
     todoProject, setTodoProject,
-    // submitButtonTitle=submitButtonTitle
+    submitButtonTitle
 }) => {
+
+    console.log(todoProject)
+
 
     return (
         <>
@@ -74,6 +77,7 @@ export const TodoForm = ({
                         </div>
                         <div className='projects'>
                             {
+                              
                                 projects.length > 0 ?
                                     projects.map(project =>
                                         <div
@@ -89,13 +93,13 @@ export const TodoForm = ({
                         </div>
                     </div>
 
-                    {/* {
+                    {
                         showButtons &&
                         <div className='confirm'>
                             <button>{submitButtonTitle}</button>
                         </div>
 
-                    } */}
+                    }
 
 
                 </form>
