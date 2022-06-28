@@ -34,7 +34,7 @@ export const AddNewTodo = () => {
                     time:moment(time).format('hh:mm A'),
                     projectName: todoProject,
                     checked:false,
-                    color:randomColor()
+                    color:randomColor({luminosity: 'dark'})
 
                 }
             )

@@ -2,12 +2,13 @@ import moment from 'moment';
 import React, { useState } from 'react';
 import { useContext } from 'react';
 import { ArrowClockwise, CheckCircleFill, Circle, Trash } from 'react-bootstrap-icons';
+import { useSpring, animated, useTransition } from 'react-spring';
 import { TodoContext } from '../context/TodoContext';
 import db from '../services/todoFirebaseService';
 
 export const Todo = (props) => {
 
-    const { setSelectedTodo,selectedTodo } = useContext(TodoContext);
+    const { setSelectedTodo, selectedTodo } = useContext(TodoContext);
 
     const todo = props.todo;
 
@@ -20,11 +21,11 @@ export const Todo = (props) => {
             .delete()
     }
 
-    
+
     const handleDelete = (todo) => {
         deleteTodo(todo);
 
-        if(selectedTodo === todo){
+        if (selectedTodo === todo) {
             setSelectedTodo(undefined);
         }
     }
@@ -59,11 +60,24 @@ export const Todo = (props) => {
         console.log(selectedTodo)
     }
 
+    const todoLoadAnimation = useSpring({
+        from: { marginTop: '-12px', opacity: 0 },
+        to: { marginTop: '-0px', opacity: 1 }
+    })
+
+    const buttonCheckTransitions = useTransition(todo.checked, {
+        from: { position: 'absolute', transform: 'scale(0)' },
+        enter: { transform: 'scale(1)' },
+        leave: { transform: 'scale(0)' }
+    })
+
+
     return (
         <>
-            <div
+            <animated.div
                 className='todo'
-              
+                style={todoLoadAnimation}
+
             >
                 <div
                     className='todo-container'
@@ -75,23 +89,35 @@ export const Todo = (props) => {
                         onClick={() => checkTodo(todo)}
                     >
                         {
-                            todo.checked ?
-                                <span className='checked'>
-                                    <CheckCircleFill color='#bebebe' />
-                                </span>
 
-                                :
+                            buttonCheckTransitions((props,checked) =>
+                                checked ?
+                                    <animated.span
+                                        className='checked'
+                                        style={props}
 
-                                <span className='unchecked'>
-                                    <Circle color={todo.color} />
-                                </span>
+                                    >
+                                        <CheckCircleFill color='#bebebe' />
+                                    </animated.span>
+
+                                    :
+
+                                    <animated.span
+                                        className='unchecked'
+                                        style={props}
+
+                                    >
+                                        <Circle color={todo.color} />
+                                    </animated.span>
+                            )
+
                         }
                     </div>
 
                     <div
-                     className='text'
-                     onClick={() => handleSelectedTodo(todo)}
-                     >
+                        className='text'
+                        onClick={() => handleSelectedTodo(todo)}
+                    >
                         <p>{todo.text}</p>
                         <span>{todo.time} - {todo.projectName}</span>
                         <div className={`line ${todo.checked ? 'line-through' : ''}`} />
@@ -121,7 +147,7 @@ export const Todo = (props) => {
                     </div>
 
                 </div>
-            </div>
+            </animated.div>
         </>
     )
 }
