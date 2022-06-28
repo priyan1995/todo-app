@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { useSpring, animated } from 'react-spring';
 
 export const CustomModal = (props) => {
 
@@ -13,17 +14,24 @@ export const CustomModal = (props) => {
         }
     }
 
+    const modalAnimation = useSpring({
+        opacity: showModal ? 1 : 0,
+        top: showModal ? '25%' : '0',
+        config: { friction: 10 }
+    })
+
     return (
         <>
             {showModal ? (
                 <>
+                
                     <div className='pd-modal' ref={modalRef} onClick={closeModal}>
-                        <div className='container'>
+                        <animated.div className='container' style={modalAnimation}>
                             {props.children}
                             <button onClick={() => setShowModal(false)} className="pd-modal-closebtn">
                                 X
                             </button>
-                        </div>
+                        </animated.div>
                     </div>
                 </>
             ) : ''}
