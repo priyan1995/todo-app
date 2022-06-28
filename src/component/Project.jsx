@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Pencil, XCircle } from 'react-bootstrap-icons';
+import { useSpring, animated, useTransition } from 'react-spring';
 import { TodoContext } from '../context/TodoContext';
 import db from '../services/todoFirebaseService';
 import { ProjectRename } from './ProjectRename';
@@ -7,10 +8,26 @@ import { CustomModal } from './UIElements/Modal';
 
 export const Project = (props) => {
 
-    const { defaultProject,selectedProject,setSelectedProject } = useContext(TodoContext);
+    const { defaultProject, selectedProject, setSelectedProject } = useContext(TodoContext);
 
     const [showModal, setShowModal] = useState(false);
+
     const project = props.project;
+
+    const edit = props.edit;
+
+    console.log(edit)
+
+    const projectLoadAnimation = useSpring({
+        from: { marginTop: '-12px', opacity: 0 },
+        to: { marginTop: '-0px', opacity: 1 }
+    })
+
+    const buttonTransitions = useTransition(edit, {
+        from: { opacity: 0, right: '-20px' },
+        enter: { opacity: 1, right: '0px' },
+        leave: { opacity: 0, right: '-20px' }
+    })
 
     const deleteProject = (project) => {
         db
@@ -38,7 +55,10 @@ export const Project = (props) => {
 
     return (
         <>
-            <div className='pd-project'>
+            <animated.div
+                className='pd-project'
+                style={projectLoadAnimation}
+            >
 
                 <div
                     className='name'
@@ -49,25 +69,30 @@ export const Project = (props) => {
 
                 <div className='btns'>
                     {
-                        props.edit ?
-                            <div className='edit-delete'>
-                                <span className='edit' onClick={() => setShowModal(true)}>
-                                    <Pencil size="13" />
-                                </span>
-                                <span
-                                    className='delete'
-                                    onClick={() => deleteProject(project)}
-                                >
-                                    <XCircle size="13" />
-                                </span>
-                            </div>
-                            :
-                            project.numOfTodos === 0 ?
-                                ""
+
+                        buttonTransitions((props, editProject) =>
+                            editProject ?
+                                <animated.div style={props} className='edit-delete'>
+                                    <span className='edit' onClick={() => setShowModal(true)}>
+                                        <Pencil size="13" />
+                                    </span>
+                                    <span
+                                        className='delete'
+                                        onClick={() => deleteProject(project)}
+                                    >
+                                        <XCircle size="13" />
+                                    </span>
+                                </animated.div>
                                 :
-                                <div className='total-todos'>
-                                    {project.numOfTodos}
-                                </div>
+                                project.numOfTodos === 0 ?
+                                    ""
+                                    :
+                                    <animated.div style={props} className='total-todos'>
+                                        {project.numOfTodos}
+                                    </animated.div>
+
+                        )
+
                     }
 
                 </div>
@@ -80,7 +105,7 @@ export const Project = (props) => {
                     />
                 </CustomModal>
 
-            </div>
+            </animated.div>
         </>
     )
 }

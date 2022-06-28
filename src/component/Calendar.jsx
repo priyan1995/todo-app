@@ -12,12 +12,12 @@ export const Calendar = () => {
 
     const calendarItems = ['today', 'next 7 days', 'all days'];
 
-    const projectSpin = useSpring({
+    const calendarSpin = useSpring({
         transform: showMenu ? 'rotate(0deg)' : 'rotate(180deg)',
         config: { friction: 10 }
     })
 
-    const projectMenu = useSpring({
+    const calendarMenu = useSpring({
         display: showMenu ? 'block' : 'none',
         lineHeight: showMenu ? 1.2 : 0
     })
@@ -32,7 +32,7 @@ export const Calendar = () => {
                     </div>
                     <div className='btns'>
                         <animated.span
-                            style={projectSpin}
+                            style={calendarSpin}
                             onClick={() => setShowMenu(!showMenu)}
                         >
                             <CaretUp size='20' />
@@ -42,7 +42,7 @@ export const Calendar = () => {
 
                 <animated.div
                     className='items'
-                    style={projectMenu}
+                    style={calendarMenu}
                 >
                     {
                         calendarItems.map(item =>
